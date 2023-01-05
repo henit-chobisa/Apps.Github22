@@ -1,13 +1,17 @@
 
 tasks:
   - name: Pulling Rocket.Chat Image
-    init: docker pull registry.rocket.chat/rocketchat/rocket.chat:${RELEASE:-latest} && exit
+    init: docker pull registry.rocket.chat/rocketchat/rocket.chat:${RELEASE:-latest}
   - name: Pull Mongodb Image
-    init: docker pull docker.io/bitnami/mongodb:${MONGODB_VERSION:-4.4} && exit
+    init: docker pull docker.io/bitnami/mongodb:${MONGODB_VERSION:-4.4}
   - name: Start Rocket.Chat Server
     command: docker-compose up -d && exit
   - name: Intiate Administrator
-    command: gp ports await 3000 && sh init.sh && gp preview $(gp url 3000)
+    command: gp ports await 3000 && sh init.sh && exit
+  - name: Install RocketChat Apps Cli
+    init: cd github && npm install -g @rocket.chat/apps-cli && exit
+  - name: Install Github App in Server
+    command: echo rc-apps deploy --url=$(gp url 3000) --username=user0 --password=123456
 
 github:
   prebuilds:
