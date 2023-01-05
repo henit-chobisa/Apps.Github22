@@ -7,11 +7,11 @@ tasks:
   - name: Start Rocket.Chat Server
     command: docker-compose up -d && exit
   - name: Intiate Administrator
-    command: gp ports await 3000 && sh init.sh && exit
+    command: gp ports await 3000 && sh init.sh
   - name: Install RocketChat Apps Cli
-    init: cd github && npm install -g @rocket.chat/apps-cli && exit
+    init: cd github && npm install -g @rocket.chat/apps-cli
   - name: Install Github App in Server
-    command: echo rc-apps deploy --url=$(gp url 3000) --username=user0 --password=123456
+    command: rc-apps deploy --url=$(gp url 3000) --username=user0 --password=123456
 
 github:
   prebuilds:
