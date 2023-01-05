@@ -1,17 +1,39 @@
 
 tasks:
   - name: Pulling Rocket.Chat Image
-    init: docker pull registry.rocket.chat/rocketchat/rocket.chat:${RELEASE:-latest}
+    init: |
+      docker pull registry.rocket.chat/rocketchat/rocket.chat:${RELEASE:-latest}
+
   - name: Pull Mongodb Image
-    init: docker pull docker.io/bitnami/mongodb:${MONGODB_VERSION:-4.4}
+    init: |
+      docker pull docker.io/bitnami/mongodb:${MONGODB_VERSION:-4.4}
+
+  - name: Install dependencies
+    init: |
+      cd github && 
+      npm install
+
   - name: Start Rocket.Chat Server
     command: docker-compose up -d && exit
+
   - name: Intiate Administrator
-    command: gp ports await 3000 && gp ports visibility 3000:public && sh init.sh
+    command: |
+      gp ports await 3000 && 
+      gp ports visibility 3000:public && 
+      curl -H "Content-type:application/json" $(gp url 3000)/api/v1/users.register -d '{ "username": "user0", "email": "a@b.com", "pass": "123456", "name": "user"}' && 
+      gp sync-done user-init
+
   - name: Install RocketChat Apps Cli
-    command: npm install -g @rocket.chat/apps-cli && gp sync-done apps-cli-installed
+    command: |
+      npm install -g @rocket.chat/apps-cli && 
+      gp sync-done apps-cli-installed
+
   - name: Install Github App in Server
-    command: gp sync-await apps-cli-installed && gp ports await 3000 && cd github && rc-apps deploy --url=$(gp url 3000) --username=user0 --password=123456
+    command: |
+      gp sync-await apps-cli-installed && 
+      gp ports await 3000 && 
+      gp sync-await user-init
+      cd github && rc-apps deploy --url=$(gp url 3000) --username=user0 --password=123456
 
 github:
   prebuilds:
