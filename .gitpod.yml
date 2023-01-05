@@ -1,0 +1,20 @@
+
+tasks:
+  - name: Pulling Rocket.Chat Image
+    init: docker pull registry.rocket.chat/rocketchat/rocket.chat:${RELEASE:-latest}
+  - name: Pull Mongodb Image
+    init: docker pull docker.io/bitnami/mongodb:${MONGODB_VERSION:-4.4}
+  - name: Start Rocket.Chat Server
+    command: docker-compose up -d
+  - name: Intiate Administrator
+    init: gp ports await 3000 && sh init.sh && gp preview $(gp url 3000)
+
+
+github:
+  prebuilds:
+    master: true
+    branches: true
+    pullRequests: true
+    pullRequestsFromForks: true
+    addCheck: true
+    addBadge: false
