@@ -9,9 +9,9 @@ tasks:
   - name: Intiate Administrator
     command: gp ports await 3000 && gp ports visibility 3000:public && sh init.sh
   - name: Install RocketChat Apps Cli
-    init: cd github && npm install @rocket.chat/apps-cli
+    command: npm install -g @rocket.chat/apps-cli && gp sync-done apps-cli-installed
   - name: Install Github App in Server
-    command: cd github && rc-apps deploy --url=$(gp url 3000) --username=user0 --password=123456
+    command: gp sync-await apps-cli-installed && gp ports await 3000 && cd github && rc-apps deploy --url=$(gp url 3000) --username=user0 --password=123456
 
 github:
   prebuilds:
