@@ -7,7 +7,7 @@ tasks:
   - name: Start Rocket.Chat Server
     command: docker-compose up -d
   - name: Intiate Administrator
-    init: gp ports await 3000 && sh init.sh && gp preview $(gp url 3000)
+    command: gp ports await 3000 && sh init.sh && gp preview $(gp url 3000)
 
 
 github:
