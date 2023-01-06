@@ -14,10 +14,9 @@ tasks:
 
   - name: Start and Setup Rocket Chat Server
     command: |
-      docker-compose up -d
-      gp ports await 3000
-      sleep 20
-      ./init.sh
+      docker-compose up -d 
+      gp ports await 3000 
+      go run init.go
 
   - name: Install RocketChat Apps Cli
     command: |
