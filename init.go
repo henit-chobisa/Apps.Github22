@@ -26,7 +26,7 @@ type Response struct {
 
 func setUser() bool {
 	url := "http://localhost:3000/api/v1/users.register"
-	jsonData := map[string]string{`username`: "usd", `email`: "8@1.com", `pass`: "123456", `name`: "hiii"}
+	jsonData := map[string]string{`username`: "user0", `email`: "a@b.com", `pass`: "123456", `name`: "user"}
 	data, err := json.Marshal(jsonData)
 	if err != nil {
 		fmt.Println(err)
