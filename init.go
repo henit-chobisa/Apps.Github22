@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os/exec"
 	"time"
 )
 
@@ -23,7 +24,10 @@ func setUser() bool {
 		fmt.Println(err)
 	}
 	fmt.Println(bytes.NewBuffer(data))
-	resp, _ := http.Post(url, "application/json", bytes.NewBuffer(data))
+	resp, error := http.Post(url, "application/json", bytes.NewBuffer(data))
+	if error != nil {
+		return false
+	}
 	data, _ = ioutil.ReadAll(resp.Body)
 	var response User
 	json.Unmarshal(data, &response)
@@ -38,7 +42,9 @@ func main() {
 		if status == true {
 			break
 		}
-		time.Sleep(20)
+		time.Sleep(20 * time.Second)
 		iterations++
 	}
+
+	exec.Command("gp", "sync-done", "user-init").Output()
 }
