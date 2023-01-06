@@ -12,12 +12,10 @@ tasks:
       cd github && 
       npm install
 
-  - name: Start Rocket.Chat Server
-    command: docker-compose up -d && exit
-
-  - name: Intiate Administrator
+  - name: Start and Setup Rocket Chat Server
     command: |
-      gp ports await 3000 
+      docker-compose up -d
+      gp ports await 3000
       gp ports visibility 3000:public
       sh init.sh
 
