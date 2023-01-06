@@ -16,8 +16,8 @@ tasks:
     command: |
       docker-compose up -d
       gp ports await 3000
-      gp ports visibility 3000:public
-      sh init.sh
+      sleep 20
+      ./init.sh
 
   - name: Install RocketChat Apps Cli
     command: |
