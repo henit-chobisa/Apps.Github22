@@ -20,7 +20,6 @@ tasks:
       gp ports await 3000 
       gp ports visibility 3000:public
       sh init.sh
-      gp sync-done user-init
 
   - name: Install RocketChat Apps Cli
     command: |
