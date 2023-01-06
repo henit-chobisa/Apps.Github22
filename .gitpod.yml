@@ -19,7 +19,7 @@ tasks:
     command: |
       gp ports await 3000 
       gp ports visibility 3000:public
-      curl -H "Content-type:application/json" $(gp url 3000)/api/v1/users.register -d '{ "username": "user0", "email": "a@b.com", "pass": "123456", "name": "user"}'
+      
       gp sync-done user-init
 
   - name: Install RocketChat Apps Cli
@@ -32,7 +32,7 @@ tasks:
       gp sync-await apps-cli-installed && 
       gp ports await 3000 && 
       gp sync-await user-init
-      cd github && rc-apps deploy --url=$(gp url 3000) --username=user0 --password=123456
+      cd github && rc-apps deploy --url=http://localhost:3000 --username=user0 --password=123456
 
 github:
   prebuilds:
