@@ -24,7 +24,7 @@ type Response struct {
 	user    User
 }
 
-func setUser() bool {
+func setUser() (bool, bool) {
 	url := "http://localhost:3000/api/v1/users.register"
 	jsonData := map[string]string{`username`: "user0", `email`: "a@b.com", `pass`: "123456", `name`: "user"}
 	data, err := json.Marshal(jsonData)
@@ -35,26 +35,29 @@ func setUser() bool {
 	if error != nil {
 		fmt.Println("Hello")
 		fmt.Println(error.Error())
-		return false
+		return false, false
 	}
 	data, _ = ioutil.ReadAll(resp.Body)
 	var response map[string]interface{}
 	json.Unmarshal(data, &response)
 	fmt.Println(bytes.NewBuffer(data))
-	fmt.Println()
+	if response["error"] == "Username is already in use" {
+		return false, true
+	}
 	boolValue, err := strconv.ParseBool(fmt.Sprintf("%v", response["success"]))
 	if err != nil {
-		return false
+		return false, false
 	}
-	return boolValue
+	return boolValue, false
 }
 
 func main() {
 	iterations := 0
 	status := false
+	breakLoop := false
 	for iterations < 20 {
-		status = setUser()
-		if status == true {
+		status, breakLoop = setUser()
+		if status == true || breakLoop == true {
 			break
 		}
 		time.Sleep(20 * time.Second)
