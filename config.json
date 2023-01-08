@@ -1,0 +1,10 @@
+{
+  "admin" : {
+    "username": "user0",
+    "email": "a@b.com",
+    "pass": "123456",
+    "name": "user"
+  },
+  "appDir" : "./github",
+  "composeFilePath" : "./docker-compose.yml"
+}

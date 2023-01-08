@@ -1,40 +1,22 @@
 tasks:
   - name: Pulling Rocket.Chat Image
     init: |
-      docker pull registry.rocket.chat/rocketchat/rocket.chat:${RELEASE:-latest}
+      docker pull registry.rocket.chat/rocketchat/rocket.chat:${RELEASE:-latest} &&
       exit
 
   - name: Pull Mongodb Image
     init: |
-      docker pull docker.io/bitnami/mongodb:${MONGODB_VERSION:-4.4}
+      docker pull docker.io/bitnami/mongodb:${MONGODB_VERSION:-4.4} &&
       exit
 
   - name: Install dependencies
     init: |
-      cd github 
-      npm install
+      cd github &&
+      npm install &&
       exit
 
-  - name: Start and Setup Rocket Chat Server
-    command: |
-      docker-compose up -d 
-      gp ports await 3000 
-      go run init.go
-      exit
-
-  - name: Install RocketChat Apps Cli
-    command: |
-      npm install -g @rocket.chat/apps-cli && 
-      gp sync-done apps-cli-installed
-      exit
-
-  - name: Install Github App in Server
-    command: |
-      gp sync-await apps-cli-installed && 
-      gp ports await 3000 && 
-      gp sync-await user-init
-      cd github && rc-apps deploy --url=http://localhost:3000 --username=user0 --password=123456
-      echo "\n\nYour app is successfully install, please navigate to http://localhost:3000 and use username=user0 & password=123456 for accessing the rocket chat workspace, thank you!"
+  - name: Initiate RocketChat Apps Test Env
+    command: ./GitpodConfig
 
 github:
   prebuilds:
