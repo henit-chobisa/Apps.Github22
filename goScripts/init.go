@@ -35,7 +35,10 @@ func main() {
 
 	InstallApp.Install(fmt.Sprintf("%v", data["appDir"]), "http://localhost:3000", fmt.Sprintf("%v", user["username"]), fmt.Sprintf("%v", user["pass"]))
 
-	// appConfig := ConfigReader.ReadConfig(fmt.Sprintf("%v/app.json", data["appDir"]))
+	Logo.RocketChat()
 
-	// exec.Command("gp", "sync-done", "user-init").Output()
+	fmt.Printf("\n")
+	fmt.Println(Colors.Green() + "🚀 Testing environment ready for using your app\n" + Figure.Line())
+	fmt.Println("\n" + Colors.Green() + "Now you can open http://localhost:3000, use the credentials given in the config.json file and test the app.\nIf you are using web version of Gitpod make sure to install Gitpod's Local Companion.\n\nAuthor: Henit Chobisa(@henit-chobisa)\n✨ Make sure to follow Rocket.Chat and me...\n\n")
+
 }
