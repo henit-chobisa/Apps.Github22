@@ -1,15 +1,16 @@
 package main
 
 import (
-	appscli "GitpodConfig/Packages/AppsCli"
-	"GitpodConfig/Packages/Colors"
-	"GitpodConfig/Packages/ConfigReader"
-	"GitpodConfig/Packages/DockerCompose"
-	"GitpodConfig/Packages/Figure"
-	initiateadmin "GitpodConfig/Packages/InitiateAdmin"
-	"GitpodConfig/Packages/InstallApp"
-	"GitpodConfig/Packages/Logo"
+	appscli "RCTestSetup/Packages/AppsCli"
+	"RCTestSetup/Packages/Colors"
+	"RCTestSetup/Packages/ConfigReader"
+	"RCTestSetup/Packages/DockerCompose"
+	"RCTestSetup/Packages/Figure"
+	initiateadmin "RCTestSetup/Packages/InitiateAdmin"
+	"RCTestSetup/Packages/InstallApp"
+	"RCTestSetup/Packages/Logo"
 	"fmt"
+	"os/exec"
 )
 
 func main() {
@@ -41,4 +42,5 @@ func main() {
 	fmt.Println(Colors.Green() + "🚀 Testing environment ready for using your app\n" + Figure.Line())
 	fmt.Println("\n" + Colors.Green() + "Now you can open http://localhost:3000, use the credentials given in the config.json file and test the app.\nIf you are using web version of Gitpod make sure to install Gitpod's Local Companion.\n\nAuthor: Henit Chobisa(@henit-chobisa)\n✨ Make sure to follow Rocket.Chat and me...\n\n")
 
+	exec.Command("gp", "preview", "http://localhost:3000", "--external").Output()
 }

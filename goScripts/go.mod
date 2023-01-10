@@ -1,4 +1,4 @@
-module GitpodConfig
+module RCTestSetup
 
 go 1.19
 

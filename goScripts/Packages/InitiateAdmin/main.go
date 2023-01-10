@@ -1,8 +1,8 @@
 package initiateadmin
 
 import (
-	"GitpodConfig/Packages/Colors"
-	"GitpodConfig/Packages/Figure"
+	"RCTestSetup/Packages/Colors"
+	"RCTestSetup/Packages/Figure"
 	"bytes"
 	"encoding/json"
 	"fmt"

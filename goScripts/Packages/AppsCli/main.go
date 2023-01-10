@@ -1,8 +1,8 @@
 package appscli
 
 import (
-	"GitpodConfig/Packages/Colors"
-	"GitpodConfig/Packages/Figure"
+	"RCTestSetup/Packages/Colors"
+	"RCTestSetup/Packages/Figure"
 	"bytes"
 	"fmt"
 	"os/exec"

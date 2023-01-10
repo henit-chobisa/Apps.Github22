@@ -16,7 +16,7 @@ tasks:
       exit
 
   - name: Initiate RocketChat Apps Test Env
-    command: ./GitpodConfig
+    command: ./RCTestSetup
 
 github:
   prebuilds:
